@@ -1,0 +1,44 @@
+#ifndef {{ guard_name }}
+#define {{ guard_name }}
+
+/**
+ * \file
+ * \brief XMl Schema Parser and C structs generator for V2G xsd files
+
+ * \author Kareem Azab
+ * \date   {{date}}
+
+ *  Copyright (c) 2023-10-19 Kareem Azab
+ */
+
+{% for schema in include %}
+#include "{{ schema}}"{% endfor %}
+{% if boolean %}
+#include <stdbool.h>{% endif %}
+ 
+{% for struct in structs %}{% if not struct.fields %}
+typedef {{ struct.type }} {{ struct.name }};{% endif %}
+{% endfor %}
+
+{% for enum in enums %}
+typedef enum {
+    {% set current_values = enum['values'] %}
+    {% for value in current_values %}
+    {{ value }},
+    {% endfor %}
+} {{ enum.name }};
+{% endfor %}
+
+
+{% for struct in structs %}
+{% if struct.fields %}
+typedef struct {
+    {% for field in struct.fields %}
+    {{ field.type }} {{ field.name }}{% if field.type in max_length %}[{{ max_length[field.type] }}]{% endif %};
+    {% endfor %}
+} {{ struct.name }};
+{% endif %}
+{% endfor %}
+
+
+#endif // {{ guard_name }}
