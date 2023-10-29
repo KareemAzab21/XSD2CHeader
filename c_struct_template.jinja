@@ -16,7 +16,7 @@
 {% if boolean %}
 #include <stdbool.h>{% endif %}
  
-{% for struct in structs %}{% if not struct.fields %}
+{% for struct in structs %}{% if not struct.fields and struct.type %}
 typedef {{ struct.type }} {{ struct.name }};{% endif %}
 {% endfor %}
 

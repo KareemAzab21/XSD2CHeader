@@ -59,7 +59,11 @@ def generate_c_structs_from_xml(xml_filename, guard_name, date, include):
             "unsignedInt": "unsigned int",
             "unsignedByte": "unsigned char",
             "unsignedShort": "unsigned short",
+            "unsignedLong": "unsigned long",
             "string": "char",
+            "base64Binary":"char",
+            "byte":"char",
+            "hexBinary":"char",
             "boolean": "bool",
             "anyURI": "char",
         }
@@ -109,11 +113,10 @@ def generate_c_structs_from_xml(xml_filename, guard_name, date, include):
         # Handle ref attributes
         if 'ref' in element.attrib:
             ref_name = element.attrib['ref']
-            ref_element = find_element_by_name(ref_name)
-            if ref_element is not None:
-                field_name = ref_element.attrib['name']
-                field_type = ref_element.attrib['type'].split(':')[-1]
-
+            ref_name = ref_name.split(':')[-1]
+            field_name=ref_name
+            field_type=ref_name
+        # print(field_name, field_type)
         return {"name": field_name, "type": get_c_type(field_type)}
 
     # ... [Your existing code before the loops]
