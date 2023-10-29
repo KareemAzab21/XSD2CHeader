@@ -61,9 +61,9 @@ def generate_c_structs_from_xml(xml_filename, guard_name, date, include):
             "unsignedShort": "unsigned short",
             "unsignedLong": "unsigned long",
             "string": "char",
-            "base64Binary":"char",
-            "byte":"char",
-            "hexBinary":"char",
+            "base64Binary": "char",
+            "byte": "char",
+            "hexBinary": "char",
             "boolean": "bool",
             "anyURI": "char",
         }
@@ -114,8 +114,8 @@ def generate_c_structs_from_xml(xml_filename, guard_name, date, include):
         if 'ref' in element.attrib:
             ref_name = element.attrib['ref']
             ref_name = ref_name.split(':')[-1]
-            field_name=ref_name
-            field_type=ref_name
+            field_name = ref_name
+            field_type = ref_name
         # print(field_name, field_type)
         return {"name": field_name, "type": get_c_type(field_type)}
 
@@ -187,20 +187,18 @@ def generate_c_structs_from_xml(xml_filename, guard_name, date, include):
     return c_code
 
 
-if len(sys.argv) < 2:
-    print("Usage: python script_name.py /path/to/xml/file")
-    sys.exit(1)
+def generate(xml_filename):
 
-today = date.today()
-xml_filename = sys.argv[1]
-guard = get_guard_name(xml_filename)
-include = xsd_to_c_header(xml_filename)
-c_structs = generate_c_structs_from_xml(xml_filename, guard, today, include)
-output_filename = get_output_filename(xml_filename)
+    today = date.today()
+    guard = get_guard_name(xml_filename)
+    include = xsd_to_c_header(xml_filename)
+    c_structs = generate_c_structs_from_xml(
+        xml_filename, guard, today, include)
+    output_filename = get_output_filename(xml_filename)
 
-if not os.path.exists("Output"):
-    os.mkdir("Output")
-with open(os.path.join("Output", output_filename), 'w') as f:
-    f.write(c_structs)
+    if not os.path.exists("Output"):
+        os.mkdir("Output")
+    with open(os.path.join("Output", output_filename), 'w') as f:
+        f.write(c_structs)
 
-print(f"C structs have been written to {output_filename}.")
+    return "C structs have been written to /Output/" + output_filename
