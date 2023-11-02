@@ -6,7 +6,7 @@
  * \brief XMl Schema Parser and C structs generator for V2G xsd files
 
  * \author Kareem Azab
- * \date   2023-10-29
+ * \date   2023-11-02
 
  *  Copyright (c) 2023-10-19 Kareem Azab
  */
@@ -160,21 +160,36 @@ typedef enum {
 
 
 
+
 typedef struct {
     
+        
     processingType EVProcessing;
+        
     
+        
     WPT_FinePositioningMethodListType EVDeviceFinePositioningMethodList;
+        
     
+        
     WPT_PairingMethodListType EVDevicePairingMethodList;
+        
     
+        
     WPT_AlignmentCheckMethodListType EVDeviceAlignmentCheckMethodList;
+        
     
+        
     unsigned short NaturalOffset;
+        
     
+        
     WPT_DataContainerType VendorSpecificDataContainer[256];
+        
     
+        
     WPT_LF_SystemSetupDataType LF_SystemSetupData;
+        
     
 } WPT_FinePositioningSetupReqType;
 
@@ -182,17 +197,29 @@ typedef struct {
 
 typedef struct {
     
+        
     WPT_FinePositioningMethodListType PrimaryDeviceFinePositioningMethodList;
+        
     
+        
     WPT_PairingMethodListType PrimaryDevicePairingMethodList;
+        
     
+        
     WPT_AlignmentCheckMethodListType PrimaryDeviceAlignmentCheckMethodList;
+        
     
+        
     unsigned short NaturalOffset;
+        
     
+        
     WPT_DataContainerType VendorSpecificDataContainer[256];
+        
     
+        
     WPT_LF_SystemSetupDataType LF_SystemSetupData;
+        
     
 } WPT_FinePositioningSetupResType;
 
@@ -200,13 +227,21 @@ typedef struct {
 
 typedef struct {
     
+        
     processingType EVProcessing;
+        
     
+        
     WPT_EVResultType EVResultCode;
+        
     
+        
     WPT_DataContainerType VendorSpecificDataContainer[256];
+        
     
+        
     WPT_LF_DataPackageListType WPT_LF_DataPackageList;
+        
     
 } WPT_FinePositioningReqType;
 
@@ -214,11 +249,17 @@ typedef struct {
 
 typedef struct {
     
+        
     processingType EVSEProcessing;
+        
     
+        
     WPT_DataContainerType VendorSpecificDataContainer[256];
+        
     
+        
     WPT_LF_DataPackageListType WPT_LF_DataPackageList;
+        
     
 } WPT_FinePositioningResType;
 
@@ -226,13 +267,21 @@ typedef struct {
 
 typedef struct {
     
+        
     processingType EVProcessing;
+        
     
+        
     numericIDType ObservedIDCode;
+        
     
+        
     WPT_EVResultType EVResultCode;
+        
     
+        
     WPT_DataContainerType VendorSpecificDataContainer[256];
+        
     
 } WPT_PairingReqType;
 
@@ -240,13 +289,21 @@ typedef struct {
 
 typedef struct {
     
+        
     processingType EVSEProcessing;
+        
     
+        
     numericIDType ObservedIDCode;
+        
     
+        
     AlternativeSECCListType AlternativeSECCList;
+        
     
+        
     WPT_DataContainerType VendorSpecificDataContainer[256];
+        
     
 } WPT_PairingResType;
 
@@ -254,17 +311,29 @@ typedef struct {
 
 typedef struct {
     
+        
     RationalNumberType EVPCMaxReceivablePower;
+        
     
+        
     unsigned short SDMaxGroundClearence;
+        
     
+        
     unsigned short SDMinGroundClearence;
+        
     
+        
     RationalNumberType EVPCNaturalFrequency;
+        
     
+        
     bool EVPCDeviceLocalControl;
+        
     
+        
     WPT_DataContainerType VendorSpecificDataContainer[256];
+        
     
 } WPT_ChargeParameterDiscoveryReqType;
 
@@ -272,21 +341,37 @@ typedef struct {
 
 typedef struct {
     
+        
     WPT_PowerClassType PDInputPowerClass;
+        
     
+        
     RationalNumberType SDMinOutputPower;
+        
     
+        
     RationalNumberType SDMaxOutputPower;
+        
     
+        
     unsigned short SDMaxGroundClearanceSupport;
+        
     
+        
     unsigned short SDMinGroundClearanceSupport;
+        
     
+        
     RationalNumberType PDMinCoilCurrent;
+        
     
+        
     RationalNumberType PDMaxCoilCurrent;
+        
     
+        
     WPT_DataContainerType SDManufacturerSpecificDataContainer[256];
+        
     
 } WPT_ChargeParameterDiscoveryResType;
 
@@ -294,13 +379,21 @@ typedef struct {
 
 typedef struct {
     
+        
     processingType EVProcessing;
+        
     
+        
     RationalNumberType TargetCoilCurrent;
+        
     
+        
     WPT_EVResultType EVResultCode;
+        
     
+        
     WPT_DataContainerType VendorSpecificDataContainer[256];
+        
     
 } WPT_AlignmentCheckReqType;
 
@@ -308,13 +401,21 @@ typedef struct {
 
 typedef struct {
     
+        
     processingType EVSEProcessing;
+        
     
+        
     RationalNumberType PowerTransmitted;
+        
     
+        
     RationalNumberType SupplyDeviceCurrent;
+        
     
+        
     WPT_DataContainerType VendorSpecificDataContainer[256];
+        
     
 } WPT_AlignmentCheckResType;
 
@@ -322,17 +423,29 @@ typedef struct {
 
 typedef struct {
     
+        
     RationalNumberType EVPCPowerRequest;
+        
     
+        
     RationalNumberType EVPCPowerOutput;
+        
     
+        
     WPT_EVPCChargeDiagnosticsType EVPCChargeDiagnostics;
+        
     
+        
     RationalNumberType EVPCOperatingFrequency;
+        
     
+        
     WPT_EVPCPowerControlParameterType EVPCPowerControlParameter;
+        
     
+        
     WPT_DataContainerType ManufacturerSpecificDataContainer[256];
+        
     
 } WPT_ChargeLoopReqType;
 
@@ -340,21 +453,37 @@ typedef struct {
 
 typedef struct {
     
+        
     RationalNumberType EVPCPowerRequest;
+        
     
+        
     RationalNumberType SDPowerInput;
+        
     
+        
     RationalNumberType SPCMaxOutputPowerLimit;
+        
     
+        
     RationalNumberType SPCMinOutputPowerLimit;
+        
     
+        
     WPT_SPCChargeDiagnosticsType SPCChargeDiagnostics;
+        
     
+        
     RationalNumberType SPCOperatingFrequency;
+        
     
+        
     WPT_SPCPowerControlParameterType SPCPowerControlParameter;
+        
     
+        
     WPT_DataContainerType ManufacturerSpecificDataContainer[256];
+        
     
 } WPT_ChargeLoopResType;
 
@@ -362,7 +491,9 @@ typedef struct {
 
 typedef struct {
     
+        
     WPT_FinePositioningMethodType WPT_FinePositioningMethod;
+        
     
 } WPT_FinePositioningMethodListType;
 
@@ -370,7 +501,9 @@ typedef struct {
 
 typedef struct {
     
+        
     WPT_PairingMethodType WPT_PairingMethod;
+        
     
 } WPT_PairingMethodListType;
 
@@ -378,7 +511,9 @@ typedef struct {
 
 typedef struct {
     
+        
     WPT_AlignmentCheckMethodType WPT_AlignmentCheckMethod;
+        
     
 } WPT_AlignmentCheckMethodListType;
 
@@ -386,13 +521,21 @@ typedef struct {
 
 typedef struct {
     
+        
     RationalNumberType EVPCCoilCurrentRequest;
+        
     
+        
     RationalNumberType EVPCCoilCurrentInformation;
+        
     
+        
     RationalNumberType EVPCCurrentOutputInformation;
+        
     
+        
     RationalNumberType EVPCVoltageOutputInformation;
+        
     
 } WPT_EVPCPowerControlParameterType;
 
@@ -400,7 +543,9 @@ typedef struct {
 
 typedef struct {
     
+        
     RationalNumberType SPCPrimaryDeviceCoilCurrentInformation;
+        
     
 } WPT_SPCPowerControlParameterType;
 
@@ -408,9 +553,15 @@ typedef struct {
 
 typedef struct {
     
-    WPT_LF_TransmitterDataType LF_TransmitterSetupData;
-    
-    WPT_LF_ReceiverDataType LF_ReceiverSetupData;
+        
+    union {
+            
+        WPT_LF_TransmitterDataType LF_TransmitterSetupData;
+            
+        WPT_LF_ReceiverDataType LF_ReceiverSetupData;
+            
+    };
+        
     
 } WPT_LF_SystemSetupDataType;
 
@@ -418,13 +569,21 @@ typedef struct {
 
 typedef struct {
     
+        
     unsigned char NumberOfTransmitters;
+        
     
+        
     RationalNumberType SignalFrequency;
+        
     
+        
     WPT_TxRxSpecDataType TxSpecData;
+        
     
+        
     WPT_TxRxPackageSpecDataType TxPackageSpecData;
+        
     
 } WPT_LF_TransmitterDataType;
 
@@ -432,9 +591,13 @@ typedef struct {
 
 typedef struct {
     
+        
     unsigned char NumberOfReceivers;
+        
     
+        
     WPT_TxRxSpecDataType RxSpecData;
+        
     
 } WPT_LF_ReceiverDataType;
 
@@ -442,11 +605,17 @@ typedef struct {
 
 typedef struct {
     
+        
     numericIDType TxRxIdentifier;
+        
     
+        
     WPT_CoordinateXYZType TxRxPosition;
+        
     
+        
     WPT_CoordinateXYZType TxRxOrientation;
+        
     
 } WPT_TxRxSpecDataType;
 
@@ -454,11 +623,17 @@ typedef struct {
 
 typedef struct {
     
+        
     short Coord_X;
+        
     
+        
     short Coord_Y;
+        
     
+        
     short Coord_Z;
+        
     
 } WPT_CoordinateXYZType;
 
@@ -466,13 +641,21 @@ typedef struct {
 
 typedef struct {
     
+        
     WPT_TxRxPulseOrderType PulseSequenceOrder;
+        
     
+        
     unsigned short PulseSeparationTime;
+        
     
+        
     unsigned short PulseDuration;
+        
     
+        
     unsigned short PackageSeparationTime;
+        
     
 } WPT_TxRxPackageSpecDataType;
 
@@ -480,9 +663,13 @@ typedef struct {
 
 typedef struct {
     
+        
     unsigned short IndexNumber;
+        
     
+        
     numericIDType TxRxIdentifier;
+        
     
 } WPT_TxRxPulseOrderType;
 
@@ -490,7 +677,9 @@ typedef struct {
 
 typedef struct {
     
+        
     WPT_LF_TxDataType WPT_LF_TxDataList;
+        
     
 } WPT_LF_TxDataListType;
 
@@ -498,9 +687,13 @@ typedef struct {
 
 typedef struct {
     
+        
     numericIDType TxIdentifier;
+        
     
+        
     RationalNumberType EIRP;
+        
     
 } WPT_LF_TxDataType;
 
@@ -508,7 +701,9 @@ typedef struct {
 
 typedef struct {
     
+        
     WPT_LF_RxDataType WPT_LF_RxDataList;
+        
     
 } WPT_LF_RxDataListType;
 
@@ -516,9 +711,13 @@ typedef struct {
 
 typedef struct {
     
+        
     numericIDType RxIdentifier;
+        
     
+        
     WPT_LF_RxRSSIListType RSSIData;
+        
     
 } WPT_LF_RxDataType;
 
@@ -526,7 +725,9 @@ typedef struct {
 
 typedef struct {
     
+        
     WPT_LF_RxRSSIType RSSIDataList;
+        
     
 } WPT_LF_RxRSSIListType;
 
@@ -534,9 +735,13 @@ typedef struct {
 
 typedef struct {
     
+        
     numericIDType TxIdentifier;
+        
     
+        
     RationalNumberType RSSI;
+        
     
 } WPT_LF_RxRSSIType;
 
@@ -544,9 +749,13 @@ typedef struct {
 
 typedef struct {
     
+        
     unsigned char NumPackages;
+        
     
+        
     WPT_LF_DataPackageType WPT_LF_DataPackage;
+        
     
 } WPT_LF_DataPackageListType;
 
@@ -554,11 +763,19 @@ typedef struct {
 
 typedef struct {
     
-    WPT_LF_TxDataListType LF_TxData;
-    
-    WPT_LF_RxDataListType LF_RxData;
-    
+        
     unsigned char PackageIndex;
+        
+    
+        
+    union {
+            
+        WPT_LF_TxDataListType LF_TxData;
+            
+        WPT_LF_RxDataListType LF_RxData;
+            
+    };
+        
     
 } WPT_LF_DataPackageType;
 
@@ -566,7 +783,9 @@ typedef struct {
 
 typedef struct {
     
+        
     AlternativeSECCType AlternativeSECC;
+        
     
 } AlternativeSECCListType;
 
@@ -574,16 +793,23 @@ typedef struct {
 
 typedef struct {
     
+        
     identifierType SSID;
+        
     
+        
     bssidType BSSID[12];
+        
     
+        
     ipaddressType IPAddress[39];
+        
     
+        
     unsigned short Port;
+        
     
 } AlternativeSECCType;
-
 
 
 

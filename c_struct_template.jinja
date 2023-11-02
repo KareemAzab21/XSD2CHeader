@@ -30,15 +30,23 @@ typedef enum {
 {% endfor %}
 
 
+
 {% for struct in structs %}
 {% if struct.fields %}
 typedef struct {
     {% for field in struct.fields %}
-    {{ field.type }} {{ field.name }}{% if field.type in max_length %}[{{ max_length[field.type] }}]{% endif %};
+        {% if field.union %}
+    union {
+            {% for subfield in field.fields %}
+        {{ subfield.type }} {{ subfield.name }};
+            {% endfor %}
+    };
+        {% else %}
+    {{ field.type}} {{ field.name }}{% if field.type in max_length %}[{{ max_length[field.type] }}]{% endif %};
+        {% endif %}
     {% endfor %}
 } {{ struct.name }};
 {% endif %}
 {% endfor %}
-
 
 #endif // {{ guard_name }}

@@ -66,6 +66,8 @@ def generate_c_structs_from_xml(xml_filename, guard_name, date, include):
             "hexBinary": "char",
             "boolean": "bool",
             "anyURI": "char",
+            "integer": "int",
+            "ID": "char*",
         }
 
         # Find all simpleType elements in the XSD and add them to the mapping
@@ -115,11 +117,21 @@ def generate_c_structs_from_xml(xml_filename, guard_name, date, include):
             ref_name = element.attrib['ref']
             ref_name = ref_name.split(':')[-1]
             field_name = ref_name
-            field_type = ref_name
+            field_type = ref_name+"Type"
         # print(field_name, field_type)
         return {"name": field_name, "type": get_c_type(field_type)}
 
-    # ... [Your existing code before the loops]
+    def handle_choice_element(elements_choice):
+        # This function will handle the 'choice' elements and create a union structure.
+        choice_fields = []
+        for element in elements_choice:
+            if element.attrib.get('ref'):
+                print(element)
+            choice_fields.append(handle_element(element))
+        if choice_fields:
+            return {"union": True, "fields": choice_fields}
+        else:
+            return None
 
     for complex_type in root.findall('xs:complexType', ns):
         type_name = complex_type.attrib['name']
@@ -129,13 +141,31 @@ def generate_c_structs_from_xml(xml_filename, guard_name, date, include):
         elements_choice = complex_type.findall(
             'xs:sequence/xs:choice/xs:element', ns)
         elements_original = complex_type.findall('xs:sequence/xs:element', ns)
+        elements_original2 = complex_type.findall(
+            'xs:sequence/xs:attribute', ns)
+        elements_seq1 = complex_type.findall(
+            'xs:simpleContent/xs:extension/xs:attribute', ns)
+        elements_seq2 = complex_type.findall(
+            'xs:simpleContent/xs:extension/xs:sequence/xs:element', ns)
 
-        for element in chain(elements_seq, elements_choice, elements_original):
+        choice = handle_choice_element(elements_choice)
+
+        for element in chain(elements_seq, elements_original, elements_original2, elements_seq1, elements_seq2):
             fields.append(handle_element(element))
+
+        if choice:
+            fields.append(choice)
+
+        # Handle the attribute if present.
+        attribute = complex_type.find('xs:attribute', ns)
+        if attribute is not None:
+            fields.append(handle_element(attribute))
         for field in fields:
-            if field['type'] == 'bool':
+            # Check if 'type' key exists in the field dictionary.
+            if 'type' in field and field['type'] == 'bool':
                 bool_found = True
                 break
+
         structs.append({"name": type_name, "fields": fields})
 
     for element in root.findall('xs:element', ns):
