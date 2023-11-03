@@ -107,6 +107,27 @@ def generate_c_structs_from_xml(xml_filename, guard_name, date, include):
                 return element
         return None
 
+    def has_complex_children(complex_type, namespaces):
+        # List of possible children elements in a complexType
+        possible_children = [
+            'xs:sequence',
+            'xs:choice',
+            'xs:all',
+            'xs:group',
+            'xs:attribute',
+            'xs:attributeGroup',
+            'xs:complexContent',
+            'xs:simpleContent'
+        ]
+
+        for child in possible_children:
+            # Check if any of these elements are present
+            if complex_type.findall(child, namespaces):
+                return True  # Found a child element
+
+        # No children found
+        return False
+
     def handle_element(element):
         global bool_found
         """Process an individual xs:element and return its field representation."""
@@ -136,37 +157,42 @@ def generate_c_structs_from_xml(xml_filename, guard_name, date, include):
     for complex_type in root.findall('xs:complexType', ns):
         type_name = complex_type.attrib['name']
         fields = []
-        elements_seq = complex_type.findall(
-            'xs:complexContent/xs:extension/xs:sequence/xs:element', ns)
-        elements_choice = complex_type.findall(
-            'xs:sequence/xs:choice/xs:element', ns)
-        elements_original = complex_type.findall('xs:sequence/xs:element', ns)
-        elements_original2 = complex_type.findall(
-            'xs:sequence/xs:attribute', ns)
-        elements_seq1 = complex_type.findall(
-            'xs:simpleContent/xs:extension/xs:attribute', ns)
-        elements_seq2 = complex_type.findall(
-            'xs:simpleContent/xs:extension/xs:sequence/xs:element', ns)
+        if not has_complex_children(complex_type, ns):
+            structs.append(
+                {"name": type_name})
+        else:
+            elements_seq = complex_type.findall(
+                'xs:complexContent/xs:extension/xs:sequence/xs:element', ns)
+            elements_choice = complex_type.findall(
+                'xs:sequence/xs:choice/xs:element', ns)
+            elements_original = complex_type.findall(
+                'xs:sequence/xs:element', ns)
+            elements_original2 = complex_type.findall(
+                'xs:sequence/xs:attribute', ns)
+            elements_seq1 = complex_type.findall(
+                'xs:simpleContent/xs:extension/xs:attribute', ns)
+            elements_seq2 = complex_type.findall(
+                'xs:simpleContent/xs:extension/xs:sequence/xs:element', ns)
 
-        choice = handle_choice_element(elements_choice)
+            choice = handle_choice_element(elements_choice)
 
-        for element in chain(elements_seq, elements_original, elements_original2, elements_seq1, elements_seq2):
-            fields.append(handle_element(element))
+            for element in chain(elements_seq, elements_original, elements_original2, elements_seq1, elements_seq2):
+                fields.append(handle_element(element))
 
-        if choice:
-            fields.append(choice)
+            if choice:
+                fields.append(choice)
 
-        # Handle the attribute if present.
-        attribute = complex_type.find('xs:attribute', ns)
-        if attribute is not None:
-            fields.append(handle_element(attribute))
-        for field in fields:
-            # Check if 'type' key exists in the field dictionary.
-            if 'type' in field and field['type'] == 'bool':
-                bool_found = True
-                break
+            # Handle the attribute if present.
+            attribute = complex_type.find('xs:attribute', ns)
+            if attribute is not None:
+                fields.append(handle_element(attribute))
+            for field in fields:
+                # Check if 'type' key exists in the field dictionary.
+                if 'type' in field and field['type'] == 'bool':
+                    bool_found = True
+                    break
 
-        structs.append({"name": type_name, "fields": fields})
+            structs.append({"name": type_name, "fields": fields})
 
     for element in root.findall('xs:element', ns):
         complex_type = element.find('xs:complexType', ns)

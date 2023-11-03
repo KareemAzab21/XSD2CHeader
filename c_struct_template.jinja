@@ -29,7 +29,14 @@ typedef enum {
 } {{ enum.name }};
 {% endfor %}
 
-
+{% for struct in structs %}
+{% if not struct.fields and not struct.type %}
+typedef struct {
+    /* This struct is empty for Future Use. Placeholder to comply with C standards that disallow empty structs. */
+    char _reserved;
+} {{ struct.name }};
+{% endif %}
+{% endfor %}
 
 {% for struct in structs %}
 {% if struct.fields %}
